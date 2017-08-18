@@ -21,10 +21,27 @@ end
 # QUESTIONS
 standard_create_number.times do
   user = User.all.sample.id
+  title_part1 = [
+    Faker::Seinfeld.character,
+    Faker::TheFreshPrinceOfBelAir.celebrity,
+    Faker::Friends.character,
+    Faker::LordOfTheRings.character
+  ].sample
+  title_part2 =[
+    Faker::Demographic.height(:imperial),
+    Faker::Demographic.marital_status.downcase,
+    Faker::Demographic.demonym.downcase,
+  ].sample
+
+  body_part1 = [
+    Faker::MostInterestingManInTheWorld.quote,
+    Faker::HowIMetYourMother.quote,
+    Faker::TheFreshPrinceOfBelAir.quote
+  ].sample
 
   Question.create(
-  title: Faker::Book.title,
-  description: Faker::Lorem.sentence,
+  title: "Is #{ title_part1 } #{ title_part2 }?",
+  description: "#{ Faker::Seinfeld.quote }",
   author_id: user
   )
 end
@@ -34,9 +51,14 @@ end
 standard_create_number.times do
   question = Question.all.sample.id
   user = User.all.sample.id
+  description = [
+    Faker::MostInterestingManInTheWorld.quote,
+    Faker::Simpsons.quote,
+    Faker::HitchhikersGuideToTheGalaxy.quote
+  ].sample
 
   Answer.create(
-  description: Faker::Lorem.sentence,
+  description: description,
   question_id: question,
   answerer_id: user
   )
@@ -49,7 +71,7 @@ standard_create_number.times do
   type = ["Answer", "Question"]
 
   Comment.create(
-  description: Faker::Lorem.sentence,
+  description: Faker::TheFreshPrinceOfBelAir.quote,
   user_id: user,
   commentable_type: type.sample,
   commentable_id: rand(1..standard_create_number)
