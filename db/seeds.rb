@@ -7,11 +7,11 @@ Comment.delete_all
 
 # USERS
 10.times do
-  User.create(
+  user = User.new(
     username: Faker::Internet.user_name,
-    email: Faker::Internet.email,
-    password_hash: "password"
+    email: Faker::Internet.email
   )
+  user.password = "password"
 end
 
 
