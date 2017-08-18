@@ -1,13 +1,4 @@
-# To go in the layout...
-# <% if current_user %>
-#     <button> Logout </button
-# <% else %>
-#     <button> Login</button>
-#     <button> Register </button>
-# <% end %>
-
-
-enable :sessions # is this required?
+enable :sessions # is this actually required? REVIEW
 
 #####  ### # REGISTRATION # ### #####
 get '/register' do
