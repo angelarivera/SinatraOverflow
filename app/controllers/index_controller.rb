@@ -1,3 +1,4 @@
 get '/' do
-  'Hello world.'
+  redirect '/questions'
 end
+

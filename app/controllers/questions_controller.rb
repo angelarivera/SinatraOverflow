@@ -1,3 +1,4 @@
+
 get '/question/:id' do
   @question = Question.find(params[:id])
   @answers = @question.answers
@@ -40,11 +41,7 @@ get '/answers/:id/comments' do
   @comment = Comment.create( )
 end
 
-get '/questions/:id' do
-end
 
-get '/questions/new' do
-end
 
 
 
@@ -55,3 +52,30 @@ post '/answer/:id/vote' do
 
   #still need down vote.. maybe a whole other route??
 end
+
+get '/questions' do
+  @questions = Question.most_recent
+  erb :'questions/index'
+end
+
+get '/questions/new' do
+  if current_user
+    erb :'questions/new'
+  else
+    erb :'404'
+  end
+end
+
+post '/questions' do
+  # TODO: Remove when user session is ready
+  session[:user_id] = 1
+  @question = Question.new(title: params[:title], description: params[:description], author_id: session[:user_id])
+
+  if @question.save
+    redirect "/questions"
+  else
+    @errors = @question.errors.full_messages
+    erb :'questions/new'
+  end
+end
+

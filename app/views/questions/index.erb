@@ -1,0 +1,14 @@
+<h1>Recent Questions</h1>
+<main>
+  <ul>
+    <% @questions.each do |question| %>
+      <li>
+        <a href="/questions/<%= question.id %>"><%= question.title %></a>
+        <br>
+        <span class="question_details"><%= "Written on #{long_form_date(question.created_at)} by #{User.find(question.author_id).username}." %> | <%= question.total_votes %> votes | <%= question.total_answers %> answers | <%= question.total_comments %> comments </span>
+        <p class="stub"><%= stub(question.description) %></p>
+      </li>
+      <br>
+    <% end %>
+  </ul>
+</main>
