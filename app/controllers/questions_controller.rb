@@ -4,7 +4,7 @@ get '/questions' do
 end
 
 get '/questions/new' do
-  if login?
+  if current_user
     erb :'questions/new'
   else
     erb :'404'
