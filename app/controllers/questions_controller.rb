@@ -1,5 +1,5 @@
 get '/questions' do
-  @questions = Question.most_recent
+  # @questions = Question.most_recent
   erb :'questions/index'
 end
 

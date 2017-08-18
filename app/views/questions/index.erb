@@ -1,14 +1,53 @@
-<h1>Recent Questions</h1>
+<h1>Questions</h1>
 <main>
-  <ul>
-    <% @questions.each do |question| %>
-      <li>
-        <a href="/questions/<%= question.id %>"><%= question.title %></a>
+  <div class="tab">
+    <button class="tablinks" onclick="sortQuestion(event, 'recent')" id="defaultOpen">Recent</button>
+    <button class="tablinks" onclick="sortQuestion(event, 'highestVoted')">Highest Voted</button>
+    <button class="tablinks" onclick="sortQuestion(event, 'trending')">Trending</button>
+  </div>
+
+  <div id="recent" class="tabcontent">
+    <h3>Most Recent</h3>
+    <ul>
+      <% Question.most_recent.each do |question| %>
+        <li>
+          <a href="/questions/<%= question.id %>"><%= question.title %></a>
+          <br>
+          <span class="question_details"><%= "Written on #{long_form_date(question.created_at)} by #{User.find(question.author_id).username}." %> | <%= question.total_votes %> votes | <%= question.total_answers %> answers | <%= question.total_comments %> comments </span>
+          <p class="stub"><%= stub(question.description) %></p>
+        </li>
         <br>
-        <span class="question_details"><%= "Written on #{long_form_date(question.created_at)} by #{User.find(question.author_id).username}." %> | <%= question.total_votes %> votes | <%= question.total_answers %> answers | <%= question.total_comments %> comments </span>
-        <p class="stub"><%= stub(question.description) %></p>
-      </li>
-      <br>
-    <% end %>
-  </ul>
+      <% end %>
+    </ul>
+  </div>
+
+  <div id="highestVoted" class="tabcontent">
+    <h3>Highest Voted</h3>
+    <ul>
+      <% Question.highest_voted.each do |question| %>
+        <li>
+          <a href="/questions/<%= question.id %>"><%= question.title %></a>
+          <br>
+          <span class="question_details"><%= "Written on #{long_form_date(question.created_at)} by #{User.find(question.author_id).username}." %> | <%= question.total_votes %> votes | <%= question.total_answers %> answers | <%= question.total_comments %> comments </span>
+          <p class="stub"><%= stub(question.description) %></p>
+        </li>
+        <br>
+      <% end %>
+    </ul>
+  </div>
+
+  <div id="trending" class="tabcontent">
+    <h3>Trending</h3>
+    <ul>
+      <% Question.trending.each do |question| %>
+        <li>
+          <a href="/questions/<%= question.id %>"><%= question.title %></a>
+          <br>
+          <span class="question_details"><%= "Written on #{long_form_date(question.created_at)} by #{User.find(question.author_id).username}." %> | <%= question.total_votes %> votes | <%= question.total_answers %> answers | <%= question.total_comments %> comments </span>
+          <p class="stub"><%= stub(question.description) %></p>
+        </li>
+        <br>
+      <% end %>
+    </ul>
+  </div>
 </main>
