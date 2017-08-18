@@ -13,4 +13,17 @@ class Question < ActiveRecord::Base
   def self.most_recent
     Question.order(created_at: :desc).limit(15)
   end
+
+  def total_votes
+    self.votes.inject(0){|sum, vote| sum + vote.vote_value }
+  end
+
+  def total_answers
+    self.answers.length
+  end
+
+  def total_comments
+    self.comments.length
+  end
+
 end

@@ -13,8 +13,6 @@ end
 
 post '/questions' do
   # TODO: Remove when user session is ready
-  p "I'm here"
-  p params.inspect
   session[:user_id] = 1
   @question = Question.new(title: params[:title], description: params[:description], author_id: session[:user_id])
 
