@@ -6,4 +6,8 @@ class Question < ActiveRecord::Base
   has_many :answerers, through: :answers
 
   validates :author_id, presence: { message: "must have an author_id" }
+
+  def self.most_recent
+    Question.order(created_at: :desc).limit(15)
+  end
 end
