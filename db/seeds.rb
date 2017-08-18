@@ -4,19 +4,22 @@ Answer.delete_all
 Vote.delete_all
 Comment.delete_all
 
+# for testing purposes, generate more questions/comments/votes, as compared to users
+standard_create_number = 42
 
 # USERS
-10.times do
-  User.create(
+5.times do
+  user = User.new(
     username: Faker::Internet.user_name,
-    email: Faker::Internet.email,
-    password_hash: "password"
+    email: Faker::Internet.email
   )
+  user.password = "password"
+  user.save
 end
 
 
 # QUESTIONS
-10.times do
+standard_create_number.times do
   user = User.all.sample.id
 
   Question.create(
@@ -28,7 +31,7 @@ end
 
 
 # ANSWERS
-10.times do
+standard_create_number.times do
   question = Question.all.sample.id
   user = User.all.sample.id
 
@@ -41,7 +44,7 @@ end
 
 
 # COMMENTS
-10.times do
+standard_create_number.times do
   user = User.all.sample.id
   type = ["Answer", "Question"]
 
@@ -49,13 +52,14 @@ end
   description: Faker::Lorem.sentence,
   user_id: user,
   commentable_type: type.sample,
-  commentable_id: rand(1..10)
+  commentable_id: rand(1..standard_create_number)
   )
 end
 
 
 # VOTES
-10.times do
+# expect failures in seed data, as our validations state 1 vote for  <x> / user
+200.times do
   user = User.all.sample.id
   type = ["Answer", "Question"]
 
@@ -63,6 +67,6 @@ end
   vote_value: [-1, 1].sample,
   user_id: user,
   votable_type: type.sample,
-  votable_id: rand(1..10)
+  votable_id: rand(1..standard_create_number)
   )
 end
