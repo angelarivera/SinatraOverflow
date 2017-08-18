@@ -1,6 +1,6 @@
 helpers do
   def login(user)
-    sessions[:id] = user.id
+    session[:id] = user.id
   end
 
   def logout
@@ -9,7 +9,6 @@ helpers do
 
   def current_user
     User.find( session[:id] ) if session[:id]
-    # or
-    User.find_by( session[:id] )
+    # or User.find_by( session[:id] )  <=REVIEW
   end
 end
