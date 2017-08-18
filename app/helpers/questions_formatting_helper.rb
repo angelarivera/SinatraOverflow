@@ -21,11 +21,6 @@ module QuestionFormatting
     timestamp.strftime('%B %e, %Y')
   end
 
-  # TODO: Remove once real login is implemented
-  # def current_user
-  #   return false
-  # end
-
 end
 
 helpers QuestionFormatting
