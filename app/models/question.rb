@@ -3,7 +3,7 @@ class Question < ActiveRecord::Base
   has_many :answers
   has_many :votes, as: :votable
   has_many :comments, as: :commentable
-  has_many :answerers, through: :answers
+  has_many :answerers, through: :answers, source: :user
 
   validates :author_id, presence: { message: "must have an author_id" }
 
