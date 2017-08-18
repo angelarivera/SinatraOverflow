@@ -22,9 +22,9 @@ module QuestionFormatting
   end
 
   # TODO: Remove once real login is implemented
-  def login?
-    return true
-  end
+  # def current_user
+  #   return false
+  # end
 
 end
 
