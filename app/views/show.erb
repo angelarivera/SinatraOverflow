@@ -1,27 +1,85 @@
-<div id="question-container">
-<h1><%= @question.title %></h1>
-</div>
+<div id="inner-content-container">
 
+  <div id="question-header">
+    <form action="">CREATE FORM FOR UPVOTING/DOWNVOTING QUESTION</form>
 
-<div id="answers">
-  <% @answers.each do |answer| %>
+    <h2><%= @question.title %></h2>
 
-    <article id="<%= answer.id %>">
-      <form method="answer" action='/answers/<%= answer.id %>/vote' class="inline">
-        <button type="submit" name="submit_param" value="submit_value" class="fa fa-sort-desc vote-button upvote-button"></button>
-      </form> <!-- UPVOTE DOWNVOTE -->
-      <h2><span class='description'><%= answer.description %></span></h2> <!-- maybe in a p tag? or readme print -->
-      <p>
-        <span class='points'><%= answer.points %></span>
-        <span class='username'><%= answer.user %></span>
-        <span class='timestamp'><%= answer.time_since_creation %></span>
-        <span class='comment-count'><%= answer.votes %></span>
-      </p>
-    </article>
-    <div class="answer-comments">
-      <% @answer.each %>
-
+    <div id="ask-question-button" role="navigation" label="ask question">
+      <a href="/questions/new">Ask Question</a>
     </div>
+  </div>
 
-  <% end %>
+  <div id="question-description">
+    <p>
+      <%= @question.description %>
+    </p>
+
+
+
+  </div>
+
+  <div id="question-comments" class="comments">
+    <% @question.comments.each do |comment| %>
+      <p>
+        <%=comment.description%>
+      </p>
+      <p>
+        <span class='user_id'><%comment.user_id %></span>
+        <span class='timestamp'><%comment.created_at %></span> <!-- ??? how -->
+      </p>
+    <% end %>
+  </div>
+    <span>  <a href="/questions/:id/comments">New Comment</a></span>
+
+  <div id="answers">
+    <% @answers.each do |answer| %>
+
+      <article id="<%= answer.id %>">
+
+
+        <div class='vote-post'>
+          <!-- UPVOTE DOWNVOTE -->
+          <!-- <a href=""></a>  AJAX THESE FORMS-->
+          <form method="answer" action='/answers/<%= answer.id %>/vote' class="inline">
+            <button type="submit" name="submit_param" value="submit_value" class="upvote-button"></button>
+          </form>
+
+          <!--vote count -->
+          <span class='vote-count-post'><%= answer.points %></span>
+
+          <!-- DOWNVOTE -->
+          <form method="answer" action='/answers/<%= answer.id %>/vote' class="inline">
+            <button type="submit" name="submit_param" value="submit_value" class="downvote-button"></button>
+          </form>
+        </div>
+
+
+        <p class='answer-description'><%= answer.description %></p>
+
+        <div id="answer-comments">
+          <%answer.comments.each do |comment| %>
+
+          <p id='comment-description'>
+            <%=comment.description%>
+          </p>
+
+          <p id='commenter-info'>
+            <span class='user_id'><%comment.user_id %></span>
+            <span class='timestamp'><%comment.created_at %></span>
+          </p>
+
+
+          <span>  <a href="/answers/:id/comments">New Comment</a></span>
+        </div>
+        <% end %>
+      </article>
+    <% end %>
+  </div>
+
+      <h4>Have an answer?</h4>
+        <form action='/question/<%=@question.id%>/answers' method='post' class='new-answer'>
+          <input type="text" name="description" placeholder="enter answer here:">
+          <input type="submit" value="submit">
+        </form>
 </div>
