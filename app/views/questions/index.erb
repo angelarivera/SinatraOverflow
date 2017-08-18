@@ -1,3 +1,4 @@
+<h1>Recent Questions</h1>
 <% if login? %>
 <a href="/questions/new">Ask a question</a>
 <% end %>
@@ -6,10 +7,11 @@
     <% @questions.each do |question| %>
       <li>
         <a href="/questions/<%= question.id %>"><%= question.title %></a>
-        <span><%= "Written on #{long_form_date(question.created_at)} by #{User.find(question.author_id).username}." %></span>
-        <span>3 votes | 5 answers | 23 comments </span>
-        <p><%= stub(question.description) %></p>
+        <br>
+        <span class="question_details"><%= "Written on #{long_form_date(question.created_at)} by #{User.find(question.author_id).username}." %> | 3 votes | 5 answers | 23 comments </span>
+        <p class="stub"><%= stub(question.description) %></p>
       </li>
+      <br>
     <% end %>
   </ul>
 </main>
