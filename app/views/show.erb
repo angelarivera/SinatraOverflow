@@ -1,8 +1,27 @@
+<div id="question-container">
 <h1><%= @question.title %></h1>
-<div id="question-comment-container">
-<% @question.asnwers.each do |answer| %>
-<ul>
-  <li>answer</li>
-</ul>
-<%=end %>
+</div>
+
+
+<div id="answers">
+  <% @answers.each do |answer| %>
+
+    <article id="<%= answer.id %>">
+      <form method="answer" action='/answers/<%= answer.id %>/vote' class="inline">
+        <button type="submit" name="submit_param" value="submit_value" class="fa fa-sort-desc vote-button upvote-button"></button>
+      </form> <!-- UPVOTE DOWNVOTE -->
+      <h2><span class='description'><%= answer.description %></span></h2> <!-- maybe in a p tag? or readme print -->
+      <p>
+        <span class='points'><%= answer.points %></span>
+        <span class='username'><%= answer.user %></span>
+        <span class='timestamp'><%= answer.time_since_creation %></span>
+        <span class='comment-count'><%= answer.votes %></span>
+      </p>
+    </article>
+    <div class="answer-comments">
+      <% @answer.each %>
+
+    </div>
+
+  <% end %>
 </div>
