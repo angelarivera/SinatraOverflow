@@ -1,0 +1,49 @@
+<div id="inner-content-container">
+
+  <div id="question-header">
+    <form action="">CREATE FORM FOR UPVOTING/DOWNVOTING QUESTION</form>
+
+    <h2><%= @question.title %></h2>
+
+    <div id="ask-question-button" role="navigation" label="ask question">
+      <a href="/questions/new">Ask Question</a>
+    </div>
+  </div>
+
+  <div id="question-description">
+    <p>
+      <%= @question.description %>
+    </p>
+
+
+
+  </div>
+
+  <div id="question-comments" class="comments">
+    <% @question.comments.each do |comment| %>
+      <p>
+        <%=comment.description%>
+      </p>
+      <p>
+        <span class='user_id'><%comment.user_id %></span>
+        <span class='timestamp'><%comment.created_at %></span> <!-- ??? how -->
+      </p>
+    <% end %>
+  </div>
+    <span>  <a href="/questions/:id/comments">New Comment</a></span>
+
+  <div id="answers">
+    <% @answers.each do |answer| %>
+
+        <%= erb :'_answers', locals: {answer: answer} %>
+
+    <% end %>
+  </div>
+
+
+      <h4>Have an answer?</h4>
+        <form action='/questions/<%=@question.id%>/answers' method='post' class='new-answer'>
+          <input type="text" name="description" placeholder="enter answer here:">
+          <input type="submit" value="submit">
+        </form>
+</div>
