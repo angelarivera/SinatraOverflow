@@ -5,7 +5,9 @@ class Answer < ActiveRecord::Base
   has_many :comments, as: :commentable
 
   def points
-    votes.sum(:vote_value)
+    p votes
+    p votes.reduce(0) {|sum, vote| sum + vote.vote_value}
+    # votes.sum(:vote_value)
   end
 
 end
