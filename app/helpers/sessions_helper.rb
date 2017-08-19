@@ -8,7 +8,6 @@ helpers do
   end
 
   def current_user
-    User.find( session[:id] ) if session[:id]
-    # or User.find_by( session[:id] )  <=REVIEW
+    @current_user ||= User.find( session[:id] ) if session[:id]
   end
 end

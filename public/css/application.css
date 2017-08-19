@@ -1,3 +1,12 @@
+nav {
+  display: block;
+  position: relative;
+  width: 800px;
+  margin: 0 auto;
+  padding: auto;
+  text-align: right;
+}
+
 body {
   padding: 40px;
 }
@@ -36,6 +45,7 @@ a:visited {
 a:active {
     color: black;
 }
+
 
 input[type=text] {
     width: 50%;

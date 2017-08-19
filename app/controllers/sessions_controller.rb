@@ -1,5 +1,3 @@
-enable :sessions # is this actually required? REVIEW
-
 #####  ### # REGISTRATION # ### #####
 get '/register' do
   erb :'sessions/register'
@@ -39,7 +37,7 @@ end
 
 
 #####  ### # LOGOUT # ### #####
-delete '/logout' do
+get '/logout' do
   logout
   redirect '/'
 end
