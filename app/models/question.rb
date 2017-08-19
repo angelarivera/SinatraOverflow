@@ -14,6 +14,21 @@ class Question < ActiveRecord::Base
     Question.order(created_at: :desc).limit(15)
   end
 
+  def self.trending
+    Question.all.sort{ |x,y| y.trending_score <=> x.trending_score }
+  end
+
+  def self.highest_voted
+    Question.all.sort{ |x,y| y.total_votes <=> x.total_votes }
+  end
+
+  def trending_score
+    score = (self.total_votes * 1)
+    score += (self.total_comments * 2)
+    score += (self.total_answers * 3)
+    return score
+  end
+
   def total_votes
     self.votes.inject(0){|sum, vote| sum + vote.vote_value }
   end

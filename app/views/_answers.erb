@@ -3,15 +3,15 @@
     <div class='vote-post'>
         <!-- UPVOTE DOWNVOTE -->
         <!-- <a href=""></a>  AJAX THESE FORMS-->
-        <form method="answer" action='/answers/<%= answer.id %>/vote' class="inline">
-          <button type="submit" name="submit_param" value="submit_value" class="upvote-button"></button>
+        <form method="post" action='/answers/<%= answer.id %>/up_vote' class="up-vote">
+          <button type="submit" name="submit_param" value="submit_value" id="upvote-button"></button>
         </form>
 
         <!--vote count -->
-        <span class='vote-count-post'><%= answer.points %></span>
+        <span id="vote_<%=answer.id%>" class='vote-count-post'><%=answer.points%></span>
 
         <!-- DOWNVOTE -->
-        <form method="answer" action='/answers/<%= answer.id %>/vote' class="inline">
+        <form method="post" action='/answers/<%= answer.id %>/down_vote' class="down_vote">
           <button type="submit" name="submit_param" value="submit_value" class="downvote-button"></button>
         </form>
     </div>
