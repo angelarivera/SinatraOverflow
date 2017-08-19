@@ -1,8 +1,12 @@
 <article id="<%= answer.id %>">
 
-    <div class='vote-post'>
+  <div class='vote-post'>
+    <table width="100%">
+      <tr>
+        <td width="5%" align="center">
         <!-- UPVOTE DOWNVOTE -->
         <!-- <a href=""></a>  AJAX THESE FORMS-->
+
         <form method="answer" action='/answers/<%= answer.id %>/vote' class="inline">
           <button type="submit" name="submit_param" value="submit_value" class="upvote-button"></button>
         </form>
@@ -14,25 +18,36 @@
         <form method="answer" action='/answers/<%= answer.id %>/vote' class="inline">
           <button type="submit" name="submit_param" value="submit_value" class="downvote-button"></button>
         </form>
-    </div>
-
-
-      <p class='answer-description'><%= answer.description %></p>
-
-      <div id="answer-comments">
+        </td>
+        <td>
+          <p class='answer-description'><%= answer.description %></p>
+        </td>
+      </tr>
+      <tr class="answer-comments">
+        <td colspan="2">
+        <div class="comments">
         <%answer.comments.each do |comment| %>
 
         <p id='comment-description'>
           <%=comment.description%>
         </p>
 
+        <!-- TODO: Remove if Hawken is not using it -->
         <p id='commenter-info'>
           <span class='user_id'><%comment.user_id %></span>
           <span class='timestamp'><%comment.created_at %></span>
         </p>
 
+        <span class="question_details"><%= "Written on #{long_form_date(comment.created_at)} by #{User.find(comment.user_id).username}." %></span>
 
+        <hr>
+        <% end %>
         <span>  <a href="/answers/:id/comments">New Comment</a></span>
-      </div>
-      <% end %>
+        </div>
+        </td>
+      </tr>
+    </table>
+  </div>
+
+
 </article>
