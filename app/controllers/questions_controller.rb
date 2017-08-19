@@ -1,5 +1,5 @@
 
-get '/question/:id' do
+get '/questions/:id' do
   @question = Question.find(params[:id])
   @answers = @question.answers
 
