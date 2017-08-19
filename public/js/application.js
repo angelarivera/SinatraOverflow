@@ -13,7 +13,7 @@ var _up_vote = function() {
   $('.up-vote').on('submit', function(event){
     console.log("HELLOOOO")
     event.preventDefault();
-
+    debugger
 
     console.log("STOP REDIRECT")
     var $upvote = $(this)
