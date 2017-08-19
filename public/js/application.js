@@ -6,13 +6,13 @@ $(document).ready(function() {
   // See: http://docs.jquery.com/Tutorials:Introducing_$(document).ready()
 
   new_answer();
-  answer_up_vote();
-  answer_down_vote();
+  _up_vote();
+  _down_vote();
 });
 
 //-------------------UP VOTE---------------//
 
-var answer_up_vote = function() {
+var _up_vote = function() {
   $('.up-vote').on('submit', function(event){
     console.log("HELLOOOO")
     event.preventDefault();
@@ -26,6 +26,7 @@ var answer_up_vote = function() {
 
     console.log($upvote)
     console.log($url)
+    console.log(id)
 
 
     $.ajax( {
@@ -34,14 +35,16 @@ var answer_up_vote = function() {
 
     })
     .done(function(response){
-      $('#vote_'+id).text(response);
+      console.log($upvote)
+
+      $('#vote_'+ id).text(response);
     });
   });
 };
 
 //-------------------DOWN VOTE---------------//
 
-var answer_down_vote = function() {
+var _down_vote = function() {
   $('.down_vote').on('submit', function(event){
     console.log("HELLOOOO")
     event.preventDefault();
