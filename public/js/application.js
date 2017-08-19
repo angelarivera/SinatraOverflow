@@ -1,10 +1,13 @@
 $(document).ready(function() {
-  document.getElementById("defaultOpen").click();
-  // See: http://docs.jquery.com/Tutorials:Introducing_$(document).ready()
 
   new_answer();
   _up_vote();
   _down_vote();
+
+  document.getElementById("defaultOpen").click();
+  // See: http://docs.jquery.com/Tutorials:Introducing_$(document).ready()
+
+
 });
 
 //-------------------UP VOTE---------------//
@@ -13,7 +16,7 @@ var _up_vote = function() {
   $('.up-vote').on('submit', function(event){
     console.log("HELLOOOO")
     event.preventDefault();
-    debugger
+
 
     console.log("STOP REDIRECT")
     var $upvote = $(this)

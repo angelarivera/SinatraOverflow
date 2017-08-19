@@ -63,16 +63,16 @@ post '/questions/:id/up_vote' do
     if request.xhr?
       @question.total_votes.to_s
     else
-      redirect "/question/#{@question.id}"
+      redirect "/questions/#{@question.id}"
     end
 
 end
 
 post '/questions/:id/down_vote' do
-  question = Question.find(params[:id])
-  question.votes.create(vote_value: -1)
+  @question = Question.find(params[:id])
+  @question.votes.create(vote_value: -1)
     if request.xhr?
-      question.total_votes.to_s #calls votes method...
+      @question.total_votes.to_s #calls votes method...
     else
     end
 
