@@ -127,3 +127,46 @@ div.tab button.active {
     from {opacity: 0;}
     to {opacity: 1;}
 }
+
+.comments {
+    background-color: #F2F2F2;
+    width: 70%;
+    font-size: 12px;
+    margin-left: 20px;
+}
+
+a.new_comment_link {
+    text-align: right;
+}
+
+.answer-description {
+    margin-left: 5px;
+}
+
+.answers {
+    margin-top: 20px;
+    margin-bottom: 20px;
+}
+
+.vote-count-post{
+    font-size: 20px;
+    color: #3F3F3F;
+}
+
+button[name=submit_param] {
+  color: #000000;
+  cursor: pointer;
+  font-weight: bold;
+  height: 34px;
+  width: 34px;
+  padding-bottom: 2px;
+  border-width: 0px;
+}
+
+.upvote-button {
+    background: url("../up.png") no-repeat scroll 0 0 transparent;
+}
+
+.downvote-button {
+    background: url("../down.png") no-repeat scroll 0 0 transparent;
+}

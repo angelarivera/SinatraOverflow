@@ -1,3 +1,10 @@
+get '/questions/new' do
+  if current_user
+    erb :'questions/new'
+  else
+    erb :'404'
+  end
+end
 
 get '/questions/:id' do
   @question = Question.find(params[:id])
@@ -5,7 +12,6 @@ get '/questions/:id' do
 
   erb :'show'
 end
-
 
 post '/questions/:id/answers' do
     @question = Question.find(params[:id])
@@ -25,7 +31,6 @@ end
 get '/answers/:id/comments' do
   @comment = Comment.create( )
 end
-
 
 # post '/answer/:id/vote' do
 #   post = Answer.find(params[:id])
@@ -83,18 +88,8 @@ get '/questions' do
   erb :'questions/index'
 end
 
-get '/questions/new' do
-  if current_user
-    erb :'questions/new'
-  else
-    erb :'404'
-  end
-end
-
 post '/questions' do
-  # TODO: Remove when user session is ready
-  session[:user_id] = 1
-  @question = Question.new(title: params[:title], description: params[:description], author_id: session[:user_id])
+  @question = Question.new(title: params[:title], description: params[:description], author_id: session[:id])
 
   if @question.save
     redirect "/questions"

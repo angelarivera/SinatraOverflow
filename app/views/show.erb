@@ -17,9 +17,7 @@
 
     <h2><%= @question.title %></h2>
 
-    <div id="ask-question-button" role="navigation" label="ask question">
-      <a href="/questions/new">Ask Question</a>
-    </div>
+  </div>
   </article>
 
   <div id="question-description">
@@ -30,6 +28,7 @@
 
 
   </div>
+  <hr>
 
   <div id="question-comments" class="comments">
     <% @question.comments.each do |comment| %>
@@ -37,13 +36,22 @@
         <%=comment.description%>
       </p>
       <p>
-        <span class='user_id'><%comment.user_id %></span>
-        <span class='timestamp'><%comment.created_at %></span> <!-- ??? how -->
+        <!-- TODO: Remove if Hawken is not using it -->
+        <% comment_author = User.find(comment.user_id) %>
+        <span class='user_id question_details'><% comment_author.username %></span>
+        <span class='timestamp question_details'><%comment.created_at %></span>
+
+        <span class="question_details"><%= "Written on #{long_form_date(comment.created_at)} by #{User.find(comment.user_id).username}." %></span>
+
+        <hr>
       </p>
     <% end %>
+    <span>  <a href="/questions/:id/comments" class="new_comment_link">New Comment</a></span>
   </div>
-    <span>  <a href="/questions/:id/comments">New Comment</a></span>
 
+  <br>
+  <h3><%= @answers.length %> Answers</h3>
+  <hr>
   <div id="answers">
     <% @answers.each do |answer| %>
 
@@ -52,9 +60,10 @@
     <% end %>
   </div>
 
-
-      <h4>Have an answer?</h4>
-        <form action='/questions/<%=@question.id%>/answers' method='post' class='new-answer'>
+      <br>
+      <h3>Have an answer?</h3>
+      <hr>
+        <form action='/questions/<%=@question.id%>/answers' method='\\\\' class='new-answer'>
           <input type="text" name="description" placeholder="enter answer here:">
           <input type="submit" value="submit">
         </form>
