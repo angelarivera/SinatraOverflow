@@ -7,4 +7,6 @@ class Vote < ActiveRecord::Base
     scope: [ :votable_id, :votable_type ],
     message: "can only vote for a particular object once "},
   presence: { message: "must have user_id" }
+
+
 end

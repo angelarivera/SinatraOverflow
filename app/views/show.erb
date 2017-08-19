@@ -1,14 +1,24 @@
 <div id="inner-content-container">
 
-  <div id="question-header">
-    <form action="">CREATE FORM FOR UPVOTING/DOWNVOTING QUESTION</form>
+  <article id=<%=@question.id%>>
+
+  <!--UP VOTE QUESTION -->
+    <form method="post" action='/questions/<%=@question.id%>/up_vote' class="up-vote">
+          <button type="submit" name="submit_param" value="submit_value" id="upvote-button"></button>
+    </form>
+
+    <span id="vote_<%=@question.id%>" class='vote-count-post'><%=@question.total_votes%>
+    </span>
+
+  <!--DOWN VOTE QUESTION -->
+    <form method="post" action='/questions/<%= @question.id %>/down_vote' class="down_vote">
+      <button type="submit" name="submit_param" value="submit_value" id="downvote-button"></button>
+    </form>
 
     <h2><%= @question.title %></h2>
 
-<!--     <div id="ask-question-button" role="navigation" label="ask question">
-      <a href="/questions/new">Ask Question</a>
-    </div> -->
   </div>
+  </article>
 
   <div id="question-description">
     <p>
