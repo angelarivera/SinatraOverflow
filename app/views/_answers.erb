@@ -3,51 +3,54 @@
   <div class='vote-post'>
     <table width="100%">
       <tr>
-        <td width="5%" align="center">
+      <td width="5%" align="center">
         <!-- UPVOTE DOWNVOTE -->
         <!-- <a href=""></a>  AJAX THESE FORMS-->
 
-        <form method="post" action='/answers/<%= answer.id %>/up_vote' class="up-vote">
-          <button type="submit" name="submit_param" value="submit_value" id="upvote-button" class="upvote-button"></button>
-        </form>
+      <form method="post" action='/answers/<%= answer.id %>/up_vote' class="up-vote">
+        <button type="submit" name="submit_param" value="submit_value" id="upvote-button" class="upvote-button"></button>
+      </form>
 
-        <!--vote count -->
-        <span id="vote_<%=answer.id%>" class='vote-count-post'><%=answer.points%></span>
+      <!--vote count -->
+      <span id="vote_<%=answer.id%>" class='vote-count-post'><%=answer.points%></span>
 
-        <!-- DOWNVOTE -->
-        <form method="post" action='/answers/<%= answer.id %>/down_vote' class="down_vote">
-          <button type="submit" name="submit_param" value="submit_value" class="downvote-button"></button>
-        </form>
-        </td>
-        <td>
-          <p class='answer-description'><%= answer.description %></p>
-        </td>
+      <!-- DOWNVOTE -->
+      <form method="post" action='/answers/<%= answer.id %>/down_vote' class="down_vote">
+        <button type="submit" name="submit_param" value="submit_value" class="downvote-button"></button>
+      </form>
+      </td>
+
+      <td>
+        <p class='description'><%= answer.description %></p>
+      </td>
       </tr>
-      <tr class="answer-comments">
-        <td colspan="2">
-        <div class="comments">
-        <%answer.comments.each do |comment| %>
 
-        <p id='comment-description'>
-          <%=comment.description%>
-        </p>
+      <tr>
+      <td colspan="2">
+      <span class="article_details"><%= "Written on #{long_form_date(answer.created_at)} by #{User.find(answer.answerer_id).username}." %></span>
+      </td>
+      </tr>
 
-        <!-- TODO: Remove if Hawken is not using it -->
-        <p id='commenter-info'>
-          <span class='user_id'><%comment.user_id %></span>
-          <span class='timestamp'><%comment.created_at %></span>
-        </p>
+      <tr>
+      <td colspan="2">
+      <div class="comments">
+      <%answer.comments.each do |comment| %>
 
-        <span class="question_details"><%= "Written on #{long_form_date(comment.created_at)} by #{User.find(comment.user_id).username}." %></span>
+      <p id='comment-description'>
+        <%=comment.description%>
+      </p>
 
-        <hr>
-        <% end %>
-        <span>  <a href="/answers/:id/comments">New Comment</a></span>
-        </div>
-        </td>
+      <span class="question_details"><%= "Written on #{long_form_date(comment.created_at)} by #{User.find(comment.user_id).username}." %></span>
+      <hr>
+      <% end %>
+
+      </div>
+      <% if current_user %>
+      <span><a href="/answers/:id/comments" class="new_comment_link">New Comment</a></span>
+      <% end %>
+      </td>
       </tr>
     </table>
   </div>
-
-
+  <hr>
 </article>
