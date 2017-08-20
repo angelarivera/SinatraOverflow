@@ -15,11 +15,27 @@ end
 
 post '/questions/:id/answers' do
     @question = Question.find(params[:id])
-    @new_answer = Answer.create(description: params[:description], question_id: @question.id, answerer_id: session[:id])
+    @new_answer = Answer.new(description: params[:description], question_id: @question.id, answerer_id: session[:id])
   if @new_answer.save
     status 200
     if request.xhr?
       erb :'_answers', layout: false, locals: {answer: @new_answer}
+    else
+      redirect "/questions/#{@question.id}"
+    end
+  else
+    status 422
+  end
+end
+
+post '/questions/:id/comments' do
+  @question = Question.find(params[:id])
+  @comment = @question.comments.new(description: params[:comment], user_id: session[:id])
+  p @comment
+  if @comment.save
+    status 200
+    if request.xhr?
+      erb :'_comments', layout: false, locals: {comment: @comment}
     else
       redirect "/questions/#{@question.id}"
     end

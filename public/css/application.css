@@ -26,8 +26,8 @@ body {
 }
 
 .article_details {
-  color: silver;
-  font-size: 13px;
+  color: #8e8b8b;
+  font-size: 14px;
   margin-left: 20px;
 }
 
@@ -155,7 +155,13 @@ div.tab button.active {
     margin-left: 20px;
 }
 
-a.new_comment_link {
+.new_comment_form, .answer_comment_form {
+  width: 70%;
+  font-size: 12px;
+  margin-left: 20px;
+}
+
+a.new_comment_link, a.answer_comment_link{
   font-size: 12px;
   margin-left: 20px;
   margin-top: 20px;

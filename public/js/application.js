@@ -3,10 +3,37 @@ $(document).ready(function() {
   new_answer();
   _up_vote();
   _down_vote();
+  new_comment();
 
-  document.getElementById("defaultOpen").click();
-  // See: http://docs.jquery.com/Tutorials:Introducing_$(document).ready()
+  //document.getElementById("defaultOpen").click();
+  $('#defaultOpen').click();
+  $('.new_comment_form').hide();
+  $('.answer_comment_form').hide();
 
+  $('a.new_comment_link').click( function(e){
+    e.preventDefault();
+    if($('.new_comment_form').is(":visible")){
+      $('.new_comment_form').hide();
+    }
+    else{
+      $('.new_comment_form').show();
+    }
+    return false;
+  });
+
+  // $('a.answer_comment_link').click( function(e){
+  //   e.preventDefault();
+  //   console.log(e);
+  //   console.log(e.target);
+  //   console.log(e.children);
+  //   if($('.answer_comment_form').is(":visible")){
+  //     $('.answer_comment_form').hide();
+  //   }
+  //   else{
+  //     $('.answer_comment_form').show();
+  //   }
+  //   return false;
+  // });
 
 });
 
@@ -95,3 +122,23 @@ var new_answer = function() {
       });
     });
   };
+
+  //------------------------new_comment------------------------//
+var new_comment = function() {
+  $('.new_comment_form').on('submit', function(event){
+    event.preventDefault();
+
+    var new_comment = $(this).serialize();
+    var url = $(this).attr('action');
+
+    $.ajax({
+      method: "POST",
+      url: url,
+      data: new_comment
+    })
+    .done(function(response){
+      $('#question-comments').append(response);
+      $('.new_comment_form').hide();
+    });
+  });
+};

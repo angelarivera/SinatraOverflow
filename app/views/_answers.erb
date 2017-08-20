@@ -45,12 +45,17 @@
       <% end %>
 
       </div>
+<!--       TODO: FIX -->
       <% if current_user %>
-      <span><a href="/answers/:id/comments" class="new_comment_link">New Comment</a></span>
+        <span><a href="" class="answer_comment_link">New Comment</a></span>
+        <form class="answer_comment_form" action='/answers/<%= answer.id %>/comments' method='post'>
+          <input type="text" name="comment" placeholder="Your comment here">
+          <input type="submit" value="Submit">
+        </form>
       <% end %>
       </td>
       </tr>
     </table>
   </div>
-  <hr>
+  <br>
 </article>
