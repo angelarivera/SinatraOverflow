@@ -1,33 +1,33 @@
 <div id="inner-content-container">
 
-  <article id=<%=@question.id%>>
+  <h2><%= @question.title %></h2>
 
-  <!--UP VOTE QUESTION -->
-    <form method="post" action='/questions/<%=@question.id%>/up_vote' class="up-vote">
-          <button type="submit" name="submit_param" value="submit_value" id="upvote-button"></button>
-    </form>
+  <article id="<%= @question.id %>">
+    <table width="100%">
+    <tr>
+    <td width="5%" align="center">
+      <!--UP VOTE QUESTION -->
+      <form method="post" action='/questions/<%=@question.id%>/up_vote' class="up-vote">
+        <button type="submit" name="submit_param" value="submit_value" id="upvote-button" class="upvote-button"></button>
+      </form>
 
-    <span id="vote_<%=@question.id%>" class='vote-count-post'><%=@question.total_votes%>
-    </span>
+      <span id="vote_<%=@question.id%>" class="vote-count-post"><%= @question.total_votes %>
+      </span>
 
-  <!--DOWN VOTE QUESTION -->
-    <form method="post" action='/questions/<%= @question.id %>/down_vote' class="down_vote">
-      <button type="submit" name="submit_param" value="submit_value" id="downvote-button"></button>
-    </form>
-
-    <h2><%= @question.title %></h2>
-
-  </div>
+      <!--DOWN VOTE QUESTION -->
+      <form method="post" action='/questions/<%= @question.id %>/down_vote' class="down_vote">
+        <button type="submit" name="submit_param" value="submit_value" id="downvote-button" class="downvote-button"></button>
+      </form>
+    </td>
+    <td>
+      <p class='description'><%= @question.description %>
+      </p>
+    </td>
+    </tr>
+    </table>
   </article>
+  <span class="article_details"><%= "Written on #{long_form_date(@question.created_at)} by #{User.find(@question.author_id).username}." %></span>
 
-  <div id="question-description">
-    <p>
-      <%= @question.description %>
-    </p>
-
-
-
-  </div>
   <hr>
 
   <div id="question-comments" class="comments">
@@ -36,17 +36,13 @@
         <%=comment.description%>
       </p>
       <p>
-        <!-- TODO: Remove if Hawken is not using it -->
-        <% comment_author = User.find(comment.user_id) %>
-        <span class='user_id question_details'><% comment_author.username %></span>
-        <span class='timestamp question_details'><%comment.created_at %></span>
-
         <span class="question_details"><%= "Written on #{long_form_date(comment.created_at)} by #{User.find(comment.user_id).username}." %></span>
-
         <hr>
       </p>
     <% end %>
-    <span>  <a href="/questions/:id/comments" class="new_comment_link">New Comment</a></span>
+    <% if current_user %>
+    <span><a href="/questions/:id/comments">New Comment</a></span>
+    <% end %>
   </div>
 
   <br>
@@ -54,17 +50,17 @@
   <hr>
   <div id="answers">
     <% @answers.each do |answer| %>
-
         <%= erb :'_answers', locals: {answer: answer} %>
-
     <% end %>
   </div>
 
-      <br>
-      <h3>Have an answer?</h3>
-      <hr>
-        <form action='/questions/<%=@question.id%>/answers' method='\\\\' class='new-answer'>
-          <input type="text" name="description" placeholder="enter answer here:">
-          <input type="submit" value="submit">
-        </form>
+  <br>
+  <% if current_user %>
+  <h3>Have an answer?</h3>
+  <hr>
+  <form action='/questions/<%=@question.id%>/answers' method='post' class='new-answer'>
+    <input type="text" name="description" placeholder="Your answer here">
+    <input type="submit" value="submit">
+  </form>
+  <% end %>
 </div>

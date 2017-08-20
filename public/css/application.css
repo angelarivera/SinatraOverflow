@@ -25,6 +25,12 @@ body {
   font-size: 12px;
 }
 
+.article_details {
+  color: silver;
+  font-size: 13px;
+  margin-left: 20px;
+}
+
 /* unvisited link */
 a:link {
   color: black;
@@ -48,6 +54,20 @@ a:active {
 
 
 input[type=text] {
+    width: 50%;
+    padding: 12px 20px;
+    margin: 8px 0;
+    box-sizing: border-box;
+}
+
+input[type=email] {
+    width: 50%;
+    padding: 12px 20px;
+    margin: 8px 0;
+    box-sizing: border-box;
+}
+
+input[type=password] {
     width: 50%;
     padding: 12px 20px;
     margin: 8px 0;
@@ -136,10 +156,12 @@ div.tab button.active {
 }
 
 a.new_comment_link {
-    text-align: right;
+  font-size: 12px;
+  margin-left: 20px;
+  margin-top: 20px;
 }
 
-.answer-description {
+.description {
     margin-left: 5px;
 }
 
