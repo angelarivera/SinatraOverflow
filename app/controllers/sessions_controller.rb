@@ -4,18 +4,19 @@ get '/register' do
 end
 
 post '/register' do
-  @user = User.create({
+  @user = User.new({
     username: params[:username] ,
     email: params[:email] ,
     password: params[:password]
     })
-    @user.password = params[:password]
+    #@user.password = params[:password]
 
-    if @user
+    if @user.save
       login(@user)
       redirect '/'
     else
-      redirect '/register'
+      @errors = @user.errors.full_messages
+      erb :'sessions/register'
     end
   end
 
@@ -27,11 +28,12 @@ end
 
 post '/login' do
   user = User.authenticate(params[:email], params[:password])
-  if user
+  if user.nil?
+    @errors = ["Your email and password do not match our records, please try again."]
+    erb :'/sessions/login'
+  else
     login(user)
     redirect "/"
-  else
-    redirect '/login'
   end
 end
 

@@ -5,7 +5,7 @@ class Vote < ActiveRecord::Base
   validates :user_id,
   uniqueness: {
     scope: [ :votable_id, :votable_type ],
-    message: "can only vote for a particular object once "},
+    message: "can only vote for a particular post once "},
   presence: { message: "must have user_id" }
 
 

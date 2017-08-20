@@ -4,6 +4,11 @@ class User < ActiveRecord::Base
   has_many :comments
   has_many :votes
 
+  validates :username, presence: { message: "should not be blank" }
+  validates :email, presence: { message: "should not be black" }, uniqueness: true
+  validates :password_hash, presence: { message: "should not be black" }#TODO: how to validate empty passwords
+
+
   def password
     @password ||= BCrypt::Password.new(password_hash)
   end
@@ -15,10 +20,8 @@ class User < ActiveRecord::Base
 
   def self.authenticate(email, password)
     user = User.find_by(email: email)
-    if  user.password == password
-      return user
-    else
-      return nil
-    end
+    return nil if user == nil
+    return user if user.password == password
+    nil
   end
 end

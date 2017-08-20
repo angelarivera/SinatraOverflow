@@ -46,7 +46,8 @@ var hide_show_answer_comment = function(){
 //-------------------UP VOTE---------------//
 
 var _up_vote = function() {
-  $('.up-vote').on('submit', function(event){
+  $('#inner-content-container').on('submit', 'article form.up-vote', function(event){
+//$('.up-vote').on('submit', function(event){
     event.preventDefault();
 
     var $upvote = $(this);
@@ -69,7 +70,8 @@ var _up_vote = function() {
 //-------------------DOWN VOTE---------------//
 
 var _down_vote = function() {
-  $('.down_vote').on('submit', function(event){
+  $('#inner-content-container').on('submit', 'article form.down-vote', function(event){
+//$('.down-vote').on('submit', function(event){
     event.preventDefault();
 
     var $downvote = $(this);
@@ -96,7 +98,6 @@ var new_answer = function() {
     $('.new-answer').on('submit', function(event){
       event.preventDefault();
 
-      console.log(this)
       var $new_answer = $(this).serialize();
       var $url = $(this).attr('action');
 
@@ -133,7 +134,8 @@ var new_comment = function() {
 
   //----------------new_comment_on_answer-------------------//
 var new_comment_on_answer = function() {
-  $('.answer_comment_form').on('submit', function(event){
+  $('#inner-content-container').on('submit', 'article form.answer_comment_form', function(event){
+//$('.answer_comment_form').on('submit', function(event){
     event.preventDefault();
 
     var new_comment = $(this).serialize();

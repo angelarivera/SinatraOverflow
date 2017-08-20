@@ -27,7 +27,7 @@
 
       <!--DOWN VOTE QUESTION -->
       <% if current_user %>
-      <form method="post" action='/questions/<%= @question.id %>/down_vote' class="down_vote">
+      <form method="post" action='/questions/<%= @question.id %>/down_vote' class="down-vote">
         <button type="submit" name="submit_param" value="submit_value" id="downvote-button" class="downvote-button"></button>
       </form>
       <% else %>
