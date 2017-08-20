@@ -152,13 +152,13 @@ div.tab button.active {
     background-color: #F2F2F2;
     width: 70%;
     font-size: 12px;
-    margin-left: 20px;
+    margin-left: 30px;
 }
 
 .new_comment_form, .answer_comment_form {
   width: 70%;
   font-size: 12px;
-  margin-left: 20px;
+  margin-left: 30px;
 }
 
 a.new_comment_link, a.answer_comment_link{
@@ -168,17 +168,22 @@ a.new_comment_link, a.answer_comment_link{
 }
 
 .description {
-    margin-left: 5px;
+  margin-left: 10px;
 }
 
 .answers {
-    margin-top: 20px;
-    margin-bottom: 20px;
+  margin-top: 20px;
+  margin-bottom: 20px;
 }
 
 .vote-count-post{
-    font-size: 20px;
-    color: #3F3F3F;
+  font-size: 20px;
+  color: #636161;
+}
+
+.votes-label{
+  font-size: 10px;
+  color: #636161;
 }
 
 button[name=submit_param] {

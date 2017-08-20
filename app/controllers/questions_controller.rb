@@ -31,7 +31,7 @@ end
 post '/questions/:id/comments' do
   @question = Question.find(params[:id])
   @comment = @question.comments.new(description: params[:comment], user_id: session[:id])
-  p @comment
+
   if @comment.save
     status 200
     if request.xhr?
@@ -44,8 +44,21 @@ post '/questions/:id/comments' do
   end
 end
 
-get '/answers/:id/comments' do
-  @comment = Comment.create( )
+post '/answers/:id/comments' do
+  @answer = Answer.find(params[:id])
+  @comment = @answer.comments.new(
+    description: params[:comment], user_id: session[:id])
+
+  if @comment.save
+    status 200
+    if request.xhr?
+      erb :'_comments', layout: false, locals: {comment: @comment}
+    else
+      redirect "/questions/#{@answer.question_id}"
+    end
+  else
+    status 422
+  end
 end
 
 # post '/answer/:id/vote' do
@@ -58,45 +71,69 @@ end
 
 post '/answers/:id/up_vote' do
   answer = Answer.find(params[:id])
-  answer.votes.create(vote_value: 1)
+  @vote = answer.votes.new(vote_value: 1, user_id: session[:id])
+
+  if @vote.save
     if request.xhr?
+      p "Found ajax"
       answer.points.to_s
     else
-      redirect "/questions"
+      p "Refreshing"
+      redirect "/questions/#{answer.question_id}"
     end
+  else
+    status 422
+    @errors = @vote.errors.full_messages
+  end
 end
 
 post '/answers/:id/down_vote' do
   answer = Answer.find(params[:id])
-  answer.votes.create(vote_value: -1)
+  @vote = answer.votes.new(vote_value: -1, user_id: session[:id])
+
+  if @vote.save
     if request.xhr?
       answer.points.to_s
     else
-      redirect "/questions"
+      redirect "/questions/#{answer.question_id}"
     end
+  else
+    status 422
+    @errors = @vote.errors.full_messages
+  end
 end
 
 
 post '/questions/:id/up_vote' do
   @question = Question.find(params[:id])
-  @question.votes.create(vote_value: 1)
+  @vote = @question.votes.new(vote_value: 1, user_id: session[:id])
 
+  if @vote.save
     if request.xhr?
       @question.total_votes.to_s
     else
       redirect "/questions/#{@question.id}"
     end
-
+  else
+    status 422
+    @errors = @vote.errors.full_messages
+  end
 end
 
 post '/questions/:id/down_vote' do
   @question = Question.find(params[:id])
-  @question.votes.create(vote_value: -1)
-    if request.xhr?
-      @question.total_votes.to_s #calls votes method...
-    else
-    end
+  @vote = @question.votes.new(vote_value: -1, user_id: session[:id])
 
+  if @vote.save
+    if request.xhr?
+      @question.total_votes.to_s
+    else
+      redirect "/questions/#{@question.id}"
+    end
+  else
+    status 422
+    @errors = @vote.errors.full_messages
+  end
 end
 
 get '/questions' do

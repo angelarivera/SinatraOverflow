@@ -1,23 +1,27 @@
-<article id="<%= answer.id %>">
+<article id="<%= answer.id %>-<%= answer.question_id %>">
 
   <div class='vote-post'>
     <table width="100%">
       <tr>
       <td width="5%" align="center">
         <!-- UPVOTE DOWNVOTE -->
-        <!-- <a href=""></a>  AJAX THESE FORMS-->
+        <% if current_user %>
+        <form method="post" action='/answers/<%= answer.id %>/up_vote' class="up-vote">
+          <button type="submit" name="submit_param" value="submit_value" id="upvote-button" class="upvote-button"></button>
+        </form>
+        <% end %>
 
-      <form method="post" action='/answers/<%= answer.id %>/up_vote' class="up-vote">
-        <button type="submit" name="submit_param" value="submit_value" id="upvote-button" class="upvote-button"></button>
-      </form>
+        <!--vote count -->
+        <span id="vote_<%= answer.id%>-<%= answer.question_id %>" class='vote-count-post'><%=answer.points%></span>
 
-      <!--vote count -->
-      <span id="vote_<%=answer.id%>" class='vote-count-post'><%=answer.points%></span>
-
-      <!-- DOWNVOTE -->
-      <form method="post" action='/answers/<%= answer.id %>/down_vote' class="down_vote">
-        <button type="submit" name="submit_param" value="submit_value" class="downvote-button"></button>
-      </form>
+        <!-- DOWNVOTE -->
+        <% if current_user %>
+        <form method="post" action='/answers/<%= answer.id %>/down_vote' class="down_vote">
+          <button type="submit" name="submit_param" value="submit_value" class="downvote-button"></button>
+        </form>
+        <% else %>
+        <p class="votes-label">votes</p>
+        <% end %>
       </td>
 
       <td>
@@ -33,8 +37,8 @@
 
       <tr>
       <td colspan="2">
-      <div class="comments">
-      <%answer.comments.each do |comment| %>
+      <div id="answer-<%= answer.id %>-<%= answer.question_id %>-comments" class="comments">
+      <% answer.comments.each do |comment| %>
 
       <p id='comment-description'>
         <%=comment.description%>
@@ -45,7 +49,7 @@
       <% end %>
 
       </div>
-<!--       TODO: FIX -->
+
       <% if current_user %>
         <span><a href="" class="answer_comment_link">New Comment</a></span>
         <form class="answer_comment_form" action='/answers/<%= answer.id %>/comments' method='post'>

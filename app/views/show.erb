@@ -1,3 +1,12 @@
+<% if @errors %>
+  <span>Something went wrong:</span>
+  <ul>
+    <% @errors.each do |error| %>
+      <li class="errors"><%= error %></li>
+    <% end %>
+  </ul>
+<% end %>
+
 <div id="inner-content-container">
 
   <h2><%= @question.title %></h2>
@@ -7,17 +16,23 @@
     <tr>
     <td width="5%" align="center">
       <!--UP VOTE QUESTION -->
-      <form method="post" action='/questions/<%=@question.id%>/up_vote' class="up-vote">
+      <% if current_user %>
+      <form method="post" action='/questions/<%= @question.id %>/up_vote' class="up-vote">
         <button type="submit" name="submit_param" value="submit_value" id="upvote-button" class="upvote-button"></button>
       </form>
+      <% end %>
 
       <span id="vote_<%=@question.id%>" class="vote-count-post"><%= @question.total_votes %>
       </span>
 
       <!--DOWN VOTE QUESTION -->
+      <% if current_user %>
       <form method="post" action='/questions/<%= @question.id %>/down_vote' class="down_vote">
         <button type="submit" name="submit_param" value="submit_value" id="downvote-button" class="downvote-button"></button>
       </form>
+      <% else %>
+        <p class="votes-label">votes</p>
+      <% end %>
     </td>
     <td>
       <p class='description'><%= @question.description %>

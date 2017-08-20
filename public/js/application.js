@@ -3,68 +3,65 @@ $(document).ready(function() {
   new_answer();
   _up_vote();
   _down_vote();
+  hide_show_question_comment();
+  hide_show_answer_comment();
   new_comment();
+  new_comment_on_answer();
 
-  //document.getElementById("defaultOpen").click();
   $('#defaultOpen').click();
   $('.new_comment_form').hide();
   $('.answer_comment_form').hide();
+});
 
+//-------------------QUESTION COMMENT---------------//
+var hide_show_question_comment = function(){
   $('a.new_comment_link').click( function(e){
     e.preventDefault();
-    if($('.new_comment_form').is(":visible")){
-      $('.new_comment_form').hide();
+    this_form = $(this).parent().parent().find('.new_comment_form');
+    if(this_form.is(":visible")){
+      this_form.hide();
     }
     else{
-      $('.new_comment_form').show();
+      this_form.show();
     }
     return false;
   });
+};
 
-  // $('a.answer_comment_link').click( function(e){
-  //   e.preventDefault();
-  //   console.log(e);
-  //   console.log(e.target);
-  //   console.log(e.children);
-  //   if($('.answer_comment_form').is(":visible")){
-  //     $('.answer_comment_form').hide();
-  //   }
-  //   else{
-  //     $('.answer_comment_form').show();
-  //   }
-  //   return false;
-  // });
-
-});
+//-------------------ANSWER COMMENT---------------//
+var hide_show_answer_comment = function(){
+  $('a.answer_comment_link').click( function(e){
+    e.preventDefault();
+    this_form = $(this).parent().parent().find('.answer_comment_form');
+    if(this_form.is(":visible")){
+      this_form.hide();
+    }
+    else{
+      this_form.show();
+    }
+    return false;
+  });
+};
 
 //-------------------UP VOTE---------------//
 
 var _up_vote = function() {
   $('.up-vote').on('submit', function(event){
-    console.log("HELLOOOO")
     event.preventDefault();
 
-
-    console.log("STOP REDIRECT")
-    var $upvote = $(this)
-
-    var $url = $upvote.attr('action')
-    var id = $upvote.closest('article').attr('id')
-
-    console.log($upvote)
-    console.log($url)
-    console.log(id)
-
+    var $upvote = $(this);
+    var $url = $upvote.attr('action');
+    var id = $upvote.closest('article').attr('id');
 
     $.ajax( {
       method: "POST",
-      url: $url,
-
+      url: $url
     })
     .done(function(response){
-      console.log($upvote)
-
-      $('#vote_'+ id).text(response);
+      $('#vote_' + id).text(response);
+    })
+    .fail(function(response){
+      alert(response.responseText);
     });
   });
 };
@@ -73,26 +70,21 @@ var _up_vote = function() {
 
 var _down_vote = function() {
   $('.down_vote').on('submit', function(event){
-    console.log("HELLOOOO")
     event.preventDefault();
 
-    console.log("STOP REDIRECT")
-    var $downvote = $(this)
-
-    var $url = $downvote.attr('action')
-    var id = $downvote.closest('article').attr('id')
-    console.log($downvote)
-    console.log($url)
-
+    var $downvote = $(this);
+    var $url = $downvote.attr('action');
+    var id = $downvote.closest('article').attr('id');
 
     $.ajax( {
       method: "POST",
-      url: $url,
-
+      url: $url
     })
     .done(function(response){
-      console.log(response)
-      $('#vote_'+id).text(response);
+      $('#vote_' + id).text(response);
+    })
+    .fail(function(response){
+      alert(response.responseText);
     });
   });
 };
@@ -105,11 +97,8 @@ var new_answer = function() {
       event.preventDefault();
 
       console.log(this)
-      console.log('STOP REDIRECT')
-      var $new_answer = $(this).serialize()
-      var $url = $(this).attr('action')
-      console.log($url)
-
+      var $new_answer = $(this).serialize();
+      var $url = $(this).attr('action');
 
       $.ajax( {
         method: "POST",
@@ -117,13 +106,12 @@ var new_answer = function() {
         data: $new_answer
       })
       .done(function(response){
-        console.log(response)
         $('#answers').append(response);
       });
     });
   };
 
-  //------------------------new_comment------------------------//
+  //----------------------new_comment------------------------//
 var new_comment = function() {
   $('.new_comment_form').on('submit', function(event){
     event.preventDefault();
@@ -139,6 +127,27 @@ var new_comment = function() {
     .done(function(response){
       $('#question-comments').append(response);
       $('.new_comment_form').hide();
+    });
+  });
+};
+
+  //----------------new_comment_on_answer-------------------//
+var new_comment_on_answer = function() {
+  $('.answer_comment_form').on('submit', function(event){
+    event.preventDefault();
+
+    var new_comment = $(this).serialize();
+    var url = $(this).attr('action');
+    var id = $(this).closest('article').attr('id');
+
+    $.ajax({
+      method: "POST",
+      url: url,
+      data: new_comment
+    })
+    .done(function(response){
+      $('#answer-' + id + '-comments').append(response);
+      $('.answer_comment_form').hide();
     });
   });
 };
