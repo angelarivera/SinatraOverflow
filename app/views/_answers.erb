@@ -1,6 +1,6 @@
 <article id="<%= answer.id %>-<%= answer.question_id %>">
 
-  <div class='vote-post'>
+<!--   <div class='vote-post'> -->
     <table width="100%">
       <tr>
       <td width="5%" align="center">
@@ -16,7 +16,7 @@
 
         <!-- DOWNVOTE -->
         <% if current_user %>
-        <form method="post" action='/answers/<%= answer.id %>/down_vote' class="down_vote">
+        <form method="post" action='/answers/<%= answer.id %>/down_vote' class="down-vote">
           <button type="submit" name="submit_param" value="submit_value" class="downvote-button"></button>
         </form>
         <% else %>
@@ -60,6 +60,6 @@
       </td>
       </tr>
     </table>
-  </div>
+<!--   </div> -->
   <br>
 </article>
