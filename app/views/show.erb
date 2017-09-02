@@ -9,6 +9,9 @@
 
 <div id="inner-content-container">
 
+<!-- if question has a best answer display it here -->
+<!-- display the others below -->
+<!-- else display all the answers -->
   <h2><%= @question.title %></h2>
 
   <article id="<%= @question.id %>">
@@ -71,6 +74,11 @@
   <h3><%= @answers.length %> Answers</h3>
   <hr>
   <div id="answers">
+  <% if @bestanswer %>
+  <p> Best Answer </p>
+  <%= erb :'_answers', locals: {answer: @bestanswer} %>
+  <% end %>
+  <hr>
     <% @answers.each do |answer| %>
       <%= erb :'_answers', locals: {answer: answer} %>
     <% end %>

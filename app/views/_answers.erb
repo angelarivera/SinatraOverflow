@@ -60,6 +60,13 @@
       </td>
       </tr>
     </table>
+
+    <% if session[:id] == @question.author_id && !@question.has_best?%>
+      <form method="post" action="/questions/<%= @question.id%>/answers/<%= answer.id%>">
+      <input type="hidden" name="_method" value="patch">
+      <input type="submit" value="Mark as best answer" tabindex="3">
+      </form> %>
+      <% end %>
 <!--   </div> -->
   <br>
 </article>

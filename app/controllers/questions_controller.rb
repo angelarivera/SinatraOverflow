@@ -8,7 +8,9 @@ end
 
 get '/questions/:id' do
   @question = Question.find(params[:id])
-  @answers = @question.answers
+  @answers = @question.non_best_answers
+  # displaying all non best answers
+  @bestanswer = @question.best_answers.first
 
   erb :'show'
 end

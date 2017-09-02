@@ -1,6 +1,8 @@
 class Question < ActiveRecord::Base
   belongs_to :user
   has_many :answers
+  has_many :best_answers, -> {where best: true}, class_name: 'Answer'
+  has_many :non_best_answers, -> {where best: false}, class_name: 'Answer'
   has_many :votes, as: :votable
   has_many :comments, as: :commentable
   has_many :answerers, through: :answers, source: :user
@@ -9,6 +11,20 @@ class Question < ActiveRecord::Base
 
   validates :title, presence: true, allow_blank: false
   validates :description, presence: true, allow_blank: false
+
+  def has_best?
+    !self.best_answers.empty?
+  end
+
+  def mark_best_answer(answer)
+    # if question does not has_best
+    # then mark it 
+    if self.has_best?
+      false
+    else 
+      answer.update(best: true)
+    end 
+  end
 
   def self.most_recent
     Question.order(created_at: :desc).limit(15)
