@@ -36,10 +36,8 @@ post '/answers/:id/up_vote' do
 
   if @vote.save
     if request.xhr?
-      p "Found ajax"
       answer.points.to_s
     else
-      p "Refreshing"
       redirect "/questions/#{answer.question_id}"
     end
   else
