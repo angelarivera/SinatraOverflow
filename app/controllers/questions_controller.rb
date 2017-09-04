@@ -8,7 +8,7 @@ end
 
 get '/questions/:id' do
   @question = Question.find(params[:id])
-  @answers = @question.non_best_answers
+  @answers = @question.non_best_answers.sort_by{ |answer| -answer.points }
   # displaying all non best answers
   @bestanswer = @question.best_answers.first
 
