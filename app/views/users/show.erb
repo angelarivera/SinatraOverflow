@@ -1,10 +1,10 @@
 <h1> Welcome, <%= current_user.username %> </h1>
 
-<h3> Your active questions: </h3>
+<h3> Review your active questions: </h3>
 <% if current_user %>
 <ul>
   <% current_user.questions.each do |question| %>
-  <li> question </li>
+  <li> <a href="/questions/<%= question.id %>"> <%= question.title %> </a> </li>
   <% end %>
 </ul>
 <% end %>

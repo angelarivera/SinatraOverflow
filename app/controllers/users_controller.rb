@@ -1,4 +1,4 @@
-get 'user/:id' do 
-  @users = User.find(params[:id])
-  erb :'user/show'
+get '/users/:id' do 
+  @user = User.find(params[:id])
+  erb :'/users/show'
 end 
