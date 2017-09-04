@@ -25,7 +25,7 @@
   <a id=stackoverflow_icon href="/"><i class="fa fa-stack-overflow" aria-hidden="true" style="color:blue; font-size:300%"></i></a>
   <nav>
     <% if current_user %>
-    <a href="/"><%="#{current_user.username}"%></a> | <a href="/logout">Logout</a>
+    <a href="user/user.id"><%="#{current_user.username}"%></a> | <a href="/logout">Logout</a>
     <!-- <form class="logout_button" action="/logout" method="post">
       <input type="hidden" name="_method" value="delete">
       <input type="submit" value="Logout">

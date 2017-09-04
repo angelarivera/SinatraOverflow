@@ -1,0 +1,10 @@
+<h1> Welcome, <%= current_user.username %> </h1>
+
+<h3> Your active questions: </h3>
+<% if current_user %>
+<ul>
+  <% current_user.questions.each do |question| %>
+  <li> question </li>
+  <% end %>
+</ul>
+<% end %>
