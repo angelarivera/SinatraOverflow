@@ -1,0 +1,72 @@
+<article id="<%= answer.id %>-<%= answer.question_id %>">
+
+<!--   <div class='vote-post'> -->
+    <table width="100%">
+      <tr>
+      <td width="5%" align="center">
+        <!-- UPVOTE DOWNVOTE -->
+        <% if current_user %>
+        <form method="post" action='/answers/<%= answer.id %>/up_vote' class="up-vote">
+          <button type="submit" name="submit_param" value="submit_value" id="upvote-button" class="upvote-button"></button>
+        </form>
+        <% end %>
+
+        <!--vote count -->
+        <span id="vote_<%= answer.id%>-<%= answer.question_id %>" class='vote-count-post'><%=answer.points%></span>
+
+        <!-- DOWNVOTE -->
+        <% if current_user %>
+        <form method="post" action='/answers/<%= answer.id %>/down_vote' class="down-vote">
+          <button type="submit" name="submit_param" value="submit_value" class="downvote-button"></button>
+        </form>
+        <% else %>
+        <p class="votes-label">votes</p>
+        <% end %>
+      </td>
+
+      <td>
+        <p class='description'><%= answer.description %></p>
+      </td>
+      </tr>
+
+      <tr>
+      <td colspan="2">
+      <span class="article_details"><%= "Written on #{long_form_date(answer.created_at)} by #{User.find(answer.answerer_id).username}." %></span>
+      </td>
+      </tr>
+
+      <tr>
+      <td colspan="2">
+      <div id="answer-<%= answer.id %>-<%= answer.question_id %>-comments" class="comments">
+      <% answer.comments.each do |comment| %>
+
+      <p id='comment-description'>
+        <%=comment.description%>
+      </p>
+
+      <span class="question_details"><%= "Written on #{long_form_date(comment.created_at)} by #{User.find(comment.user_id).username}." %></span>
+      <hr>
+      <% end %>
+
+      </div>
+
+      <% if current_user %>
+        <span><a href="" class="answer_comment_link">New Comment</a></span>
+        <form class="answer_comment_form" action='/answers/<%= answer.id %>/comments' method='post'>
+          <input type="text" name="comment" placeholder="Your comment here">
+          <input type="submit" value="Submit">
+        </form>
+      <% end %>
+      </td>
+      </tr>
+    </table>
+
+    <% if session[:id] == @question.author_id && !@question.has_best?%>
+      <form method="post" action="/questions/<%= @question.id%>/answers/<%= answer.id%>">
+      <input type="hidden" name="_method" value="patch">
+      <input type="submit" value="Mark as best answer" tabindex="3">
+      </form>
+      <% end %>
+<!--   </div> -->
+  <br>
+</article>

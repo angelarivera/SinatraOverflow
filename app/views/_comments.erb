@@ -1,0 +1,7 @@
+<p>
+  <%=comment.description%>
+</p>
+<p>
+  <span class="question_details"><%= "Written on #{long_form_date(comment.created_at)} by #{User.find(comment.user_id).username}." %></span>
+  <hr>
+</p>

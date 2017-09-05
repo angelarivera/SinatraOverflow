@@ -1,0 +1,96 @@
+<% if @errors %>
+  <span>Something went wrong:</span>
+  <ul>
+    <% @errors.each do |error| %>
+      <li class="errors"><%= error %></li>
+    <% end %>
+  </ul>
+<% end %>
+
+<div id="inner-content-container">
+
+<!-- if question has a best answer display it here -->
+<!-- display the others below -->
+<!-- else display all the answers -->
+  <h2><%= @question.title %></h2>
+
+  <article id="<%= @question.id %>">
+    <table width="100%">
+    <tr>
+    <td width="5%" align="center">
+      <!--UP VOTE QUESTION -->
+      <% if current_user %>
+      <form method="post" action='/questions/<%= @question.id %>/up_vote' class="up-vote">
+        <button type="submit" name="submit_param" value="submit_value" id="upvote-button" class="upvote-button"></button>
+      </form>
+      <% end %>
+
+      <span id="vote_<%=@question.id%>" class="vote-count-post"><%= @question.total_votes %>
+      </span>
+
+      <!--DOWN VOTE QUESTION -->
+      <% if current_user %>
+      <form method="post" action='/questions/<%= @question.id %>/down_vote' class="down-vote">
+        <button type="submit" name="submit_param" value="submit_value" id="downvote-button" class="downvote-button"></button>
+      </form>
+      <% else %>
+        <p class="votes-label">votes</p>
+      <% end %>
+    </td>
+    <td>
+      <p class='description'><%= @question.description %>
+      </p>
+    </td>
+    </tr>
+    </table>
+  </article>
+  <span class="article_details"><%= "Written on #{long_form_date(@question.created_at)} by #{User.find(@question.author_id).username}." %></span>
+
+  <hr>
+
+  <div id="question-comments" class="comments">
+    <% @question.comments.each do |comment| %>
+      <%= erb :'_comments', locals: {comment: comment} %>
+      <!-- <p>
+        <%=comment.description%>
+      </p>
+      <p>
+        <span class="question_details"><%= "Written on #{long_form_date(comment.created_at)} by #{User.find(comment.user_id).username}." %></span>
+        <hr>
+      </p> -->
+    <% end %>
+  </div>
+  <% if current_user %>
+    <span><a href="" class="new_comment_link">New Comment</a></span>
+    <form class="new_comment_form" action='/questions/<%=@question.id%>/comments' method='post'>
+      <input type="text" name="comment" placeholder="Your comment here">
+      <input type="submit" value="Submit">
+    </form>
+  <% end %>
+
+
+  <br>
+  <br>
+  <h3><%= @answers.length %> Answers</h3>
+  <hr>
+  <div id="answers">
+  <% if @bestanswer %>
+  <p> ✅ Best Answer </p>
+  <%= erb :'_answers', locals: {answer: @bestanswer} %>
+  <% end %>
+  <hr>
+    <% @answers.each do |answer| %>
+      <%= erb :'_answers', locals: {answer: answer} %>
+    <% end %>
+  </div>
+
+  <br>
+  <% if current_user %>
+  <h3>Have an answer?</h3>
+  <hr>
+  <form action='/questions/<%=@question.id%>/answers' method='post' class='new-answer'>
+    <input type="text" name="description" placeholder="Your answer here">
+    <input type="submit" value="Submit">
+  </form>
+  <% end %>
+</div>

@@ -1,0 +1,20 @@
+<h1>Ask a question</h1>
+
+<% if @errors %>
+  <span>Something went wrong:</span>
+  <ul>
+    <% @errors.each do |error| %>
+      <li class="errors"><%= error %></li>
+    <% end %>
+  </ul>
+<% end %>
+
+<form method="post" action="/questions">
+  <label>Title:</label><br>
+  <input id="title_input" name="title" type="text" tabindex="1">
+  <br><br>
+  <label>Description:</label><br>
+  <textarea id="description_textarea" name="description" tabindex="2"></textarea>
+  <br><br>
+  <input type="submit" value="Post" tabindex="3">
+</form>
